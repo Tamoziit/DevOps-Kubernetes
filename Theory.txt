@@ -1,1 +1,37 @@
-**KUBERNETES**
+**KUBERNETES** 
+-- Container orchestration system.
+
+#Kubernetes deals with ->
+- Automatic deployments of the containerized application across different servers.
+- Distribution of the load across multiple servers.
+- Auto-scaling of the deployed applications.
+- Monitoring & health check of the containers.
+- Replacements of the failed containers.
+
+#Runtimes supported by Kubernetes ->
+- Docker
+- CRI-O
+- containerd
+
+**Terminologies & Architecture
+--> *Pod* - It is the smallest unit of a Kubernetes cluster (analogous: Docker container). 
+--> A Pod may contain --> multiple containers, Shared volumes, shared IP Address.
+--> *Kubernetes Cluster* --> Contains different nodes (servers) [which in-turn house different pods].
+|
+|
+V
+Kubernetes cluster contains 2 types of nodes :
+1. Master Node : Orchestrates the worker nodes, by distributing the load among the worker loads.
+2. Worker Node : Carries out the operation/load assigned to it by master node.
+
+--> Master node contains --> API server, Scheduler, Kube Controller Manager, Cloud Controller Manager, etcd, DNS Services, kubelet, kube-proxy, container runtime.
+--> Worker node contains --> kubelet, kube-proxy, container runtime.
+--> Master node communicates with the kubelet of the worker nodes through its API server.
+--> kube-proxy is responsible for the network connection of each node.
+--> Scheduler - Orchestrates & manages the load distribution among different worker nodes.
+--> Kube Controller Manager - Controls the functioning of each node of a Kubernetes cluster.
+--> Cloud Controller Manager - Deals with the cloud services for our deployment server (including auto-scaling the deployment). It also manages all the proxy/IP address for the web to communicate with our server.
+--> etcd - stores all deployment logs as key value pairs.
+--> DNS Services - Responsible for names resolution in the entire Kubernetes cluster. It can be used to connect 2 different services by their names.
+
+--> kubectl --> Kube control -> A CLI tool to control kubernetes cluster. --> HTTPS comms. b/w API Server of master node of a kube cluster & kubectl.
