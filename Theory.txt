@@ -69,6 +69,7 @@ kube-proxy-khrmx                   1/1     Running   0             23m
 kube-scheduler-minikube            1/1     Running   0             23m
 storage-provisioner                1/1     Running   1 (23m ago)   23m
 
+**Kubernetes Pods
 --> kubectl run <container-name> --image=<image to be present inside the container> --> Spins up a pod inside a node of Kubernetes cluster.
 eg: kubectl run nginx --image=nginx --> spins up a container named "nginx" with docker's default nginx image, inside a pod
 --> kubectl describe pod <pod name> --> Provides info bout a pod.
@@ -110,3 +111,12 @@ Commercial support is available at
 </html>
 
 --> kubectl get pods -o wide --> Provides the running pods along with their IP addresses. This IP address is the address of the IP of the VM inside which minikube is running, not the local IP of our system.
+--> kubectl delete pod <pod-name> --> deletes a pod.
+--> alias k="kubectl" --> creating an alias for kubectl cmd inside Linux/Git Bash for a single session. Therefore now, kubectl get pods = k get pods (ie, k & kubectl are the same cmds).
+
+**Kubernetes Deployments
+--> k create deployment nginx-deployment --image=nginx --> creating an NGINX deployment pod named "nginx-deployment". The nginx pod hence created is managed by the deployment, autmoatically for maintenance & scaling. (By default, a deployment is created in default namespace).
+--> ReplicaSet --> Scaled up replicas of a deployed pod.
+--> kubectl/k scale deployment <deployment-name> --replicas=<replica-amt.> --> Scale-up/scale-down a deployment upto a desired amount = <replica-amt.>
+
+**Kubernetes Services
