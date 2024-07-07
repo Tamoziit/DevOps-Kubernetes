@@ -69,3 +69,44 @@ kube-proxy-khrmx                   1/1     Running   0             23m
 kube-scheduler-minikube            1/1     Running   0             23m
 storage-provisioner                1/1     Running   1 (23m ago)   23m
 
+--> kubectl run <container-name> --image=<image to be present inside the container> --> Spins up a pod inside a node of Kubernetes cluster.
+eg: kubectl run nginx --image=nginx --> spins up a container named "nginx" with docker's default nginx image, inside a pod
+--> kubectl describe pod <pod name> --> Provides info bout a pod.
+NB: > By default, a pod is assigned to kubernetes "default" namespace.
+    > docker ps | grep nginx --> command inside docker ssh to filter out only nginx image, instead of fetching all images (by only docker ps).
+$ docker ps | grep nginx
+2498e9a6a78a   nginx                       "/docker-entrypoint.…"   9 minutes ago    Up 9 minutes              k8s_nginx_nginx_default_9e5299a2-5a30-4e47-ad54-b0e51c01a6ec_0
+44cb05b529e0   registry.k8s.io/pause:3.9   "/pause"                 9 minutes ago    Up 9 minutes              k8s_POD_nginx_default_9e5299a2-5a30-4e47-ad54-b0e51c01a6ec_0 --> Here the "/docker-entrypoint.…" container is the main functional container, while "/pause" container is used to retain the namespace of nginx pod in a default shared namespace environment of multiple pods.
+
+**Connecting to the created nginx container through docker SSH inside minikube
+$ docker exec -it 2498e9a6a78a sh //connecting to nginx container by its id & enabling sha
+# hostname
+nginx
+# hostname -i
+10.244.0.3
+# curl 10.244.0.3
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+--> kubectl get pods -o wide --> Provides the running pods along with their IP addresses. This IP address is the address of the IP of the VM inside which minikube is running, not the local IP of our system.
