@@ -1,7 +1,7 @@
 **KUBERNETES** 
 -- Container orchestration system.
 
-#Kubernetes deals with ->
+#Kubernetes(K8S) deals with ->
 - Automatic deployments of the containerized application across different servers.
 - Distribution of the load across multiple servers.
 - Auto-scaling of the deployed applications.
@@ -35,3 +35,37 @@ Kubernetes cluster contains 2 types of nodes :
 --> DNS Services - Responsible for names resolution in the entire Kubernetes cluster. It can be used to connect 2 different services by their names.
 
 --> kubectl --> Kube control -> A CLI tool to control kubernetes cluster. --> HTTPS comms. b/w API Server of master node of a kube cluster & kubectl.
+
+
+**Kubernetes using Minikube package manager
+#CLI commands
+--> minikube start --driver=hyperv --> Spins up a Kubernetes cluster through minikube inside a virtual env., here - Hyper-V (for windows).
+--> minikube ip --> returns the ip on which minikube is running.
+--> ssh docker@<minikube-ip> --> spins up ssh to access the minikube server over the web.
+--> kubectl cluster-info --> Returns info about the active kube clusters.
+eg: PS C:\Windows\system32> kubectl cluster-info
+    Kubernetes control plane is running at https://172.18.203.146:8443
+    CoreDNS is running at https://172.18.203.146:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+--> kubectl get nodes --> fetches all the running nodes.
+--> kubectl get pods --> fetches all the pods inside the kubernetes nodes
+--> kubectl get namespaces --> fetches the kubernetes namespaces inside minikube server(kubernetes).
+eg:
+PS C:\Windows\system32> kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   18m
+kube-node-lease   Active   18m
+kube-public       Active   18m
+kube-system       Active   18m
+
+//Gets the running pods of kube-system namespace, ie, master node
+PS C:\Windows\system32> kubectl get pods --namespace=kube-system
+NAME                               READY   STATUS    RESTARTS      AGE
+coredns-7db6d8ff4d-2krjb           1/1     Running   0             23m
+etcd-minikube                      1/1     Running   0             23m
+kube-apiserver-minikube            1/1     Running   0             23m
+kube-controller-manager-minikube   1/1     Running   0             23m
+kube-proxy-khrmx                   1/1     Running   0             23m
+kube-scheduler-minikube            1/1     Running   0             23m
+storage-provisioner                1/1     Running   1 (23m ago)   23m
+
