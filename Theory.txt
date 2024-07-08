@@ -215,3 +215,7 @@ NB: > Since we have specified a fixed no. of replicas for deployment (here = 4),
 
 **NGINX endpoint connection to main server
 --> kubectl apply -f k8s-web-app-nginx.yaml -f nginx.yaml --> spinning up NGINX services & deployments.
+
+
+**Changing K8S container runtime from Docker to CRI-O
+--> minikube start --driver=hyperv --container-runtime=cri-o --> creating a minikube cluster in Hyper-V & CRI-O container runtime.
