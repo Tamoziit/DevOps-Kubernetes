@@ -120,3 +120,29 @@ Commercial support is available at
 --> kubectl/k scale deployment <deployment-name> --replicas=<replica-amt.> --> Scale-up/scale-down a deployment upto a desired amount = <replica-amt.>
 
 **Kubernetes Services
+--> k expose deployment <deployment-name> --port=<public port where we want to expose the deployment> --target-port=<port of the pods inside VM> --> Creates a global clusterIP which can used to access all the deployed pods inside a K8S cluster (instead of accessing them by their individual IPs).
+eg: k expose deployment nginx-deployment --port=8080 --target-port=80 --> exposes "nginx-deployment" to clusterIP=8080, such that all the nginx pods running locally inside port 80 of the K8S cluster are accessible at a common port = 8080 of K8S cluster.
+NB: Kubernetes automatically distributes the load among the deployed pods, & by using services they can be easily accessed vis a single clusterIP, instead of their individual unique IPs, which is not a feasible process in a production env.
+eg:
+k get services
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+kubernetes         ClusterIP   10.96.0.1      <none>        443/TCP    15m
+nginx-deployment   ClusterIP   10.109.78.66   <none>        8080/TCP   12s
+NB: also note, this cluster IP is the IP address of the K8S cluster running inside a VM, not our local machine & is not accessible there.
+
+$ k describe service nginx-deployment
+Name:              nginx-deployment
+Namespace:         default //default namespace where services are created
+Labels:            app=nginx-deployment
+Annotations:       <none>
+Selector:          app=nginx-deployment
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.109.78.66
+IPs:               10.109.78.66
+Port:              <unset>  8080/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.0.3:80,10.244.0.4:80,10.244.0.5:80 //pods where load is distributed
+Session Affinity:  None
+Events:            <none>
