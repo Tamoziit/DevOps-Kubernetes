@@ -211,3 +211,4 @@ NB: > Since we have specified a fixed no. of replicas for deployment (here = 4),
 
 **Specification/Config yaml/yml files to deploy clusters.
 --> kubectl apply -f deployment.yaml --> creating/applying a deployment in accordance to the specifications we have specified in deployment.yaml file.
+--> k delete -f deployment.yaml -f service.yaml --> deleting the services & deployment.
