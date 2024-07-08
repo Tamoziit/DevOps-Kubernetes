@@ -168,7 +168,7 @@ $ curl 10.106.185.183:3000; echo
 Hello from k8s-web-app-575bb48d5-mschv //pod 4
 --> Load balanced automatically across 4 pods by K8S.
 
-# NodePort : Used to connect to deployments using node IP address from our local machines itself.
+# NodePort Service : Used to connect to deployments using node IP address from our local machines itself.
 --> k expose deployment k8s-web-app --type=NodePort --port=3000 -> creating a deployment of type=NodePort.
 eg:
 $ k get svc
@@ -179,3 +179,20 @@ $ minikube ip
 172.27.189.212
 
 now, in our local browser, if we connect to 172.27.189.212:30376, we can access the response returned by the server, without having to remotely connect to the k8s cluster of the pod, in which the server has been deployed.
+
+# LoadBalancer Service : Similar to NodePort, with an external IP (pending status in minikube, while automatically assigned for cloud services like AWS).
+--> k expose deployment k8s-web-app --type=LoadBalancer --port=3000 -> creating a LoadBalancer type deployment.
+
+$ k get svc
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+k8s-web-app   LoadBalancer   10.97.237.162   <pending>     3000:32080/TCP   10s
+kubernetes    ClusterIP      10.96.0.1       <none>        443/TCP          3h58m
+$ minikube service k8s-web-app
+|-----------|-------------|-------------|-----------------------------|
+| NAMESPACE |    NAME     | TARGET PORT |             URL             |
+|-----------|-------------|-------------|-----------------------------|
+| default   | k8s-web-app |        3000 | http://172.27.189.212:32080 |
+|-----------|-------------|-------------|-----------------------------|
+🎉  Opening service default/k8s-web-app in default browser...
+
+The server will be made available on : http://172.27.189.212:32080
