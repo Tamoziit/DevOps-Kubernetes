@@ -146,3 +146,23 @@ TargetPort:        80/TCP
 Endpoints:         10.244.0.3:80,10.244.0.4:80,10.244.0.5:80 //pods where load is distributed
 Session Affinity:  None
 Events:            <none>
+
+**Deploying a web-server using K8S & Docker hub
+--> k create deployment k8s-web-app --image=insanelytamojit/k8s-web-app --> creating a deployment by pulling the custom image "insanelytamojit/k8s-web-app" from dockerhub, which have been previously pushed into dockerhub.
+-->  k expose deployment k8s-web-app --port=3000 --> creating a service to expose the deployment to port 3000 to generate clusterIP.
+--> k scale deployment k8s-web-app --replicas=4 --> scaling deployment to 4 pods.
+|
+V
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-d2f59 //pod 1
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-6jrmd //pod 2
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-6jrmd
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-d2f59 //pod 3
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-6jrmd
+$ curl 10.106.185.183:3000; echo
+Hello from k8s-web-app-575bb48d5-mschv //pod 4
+--> Load balanced automatically across 4 pods by K8S.
