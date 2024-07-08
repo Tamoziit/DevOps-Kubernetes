@@ -1,0 +1,34 @@
+#This service named "nginx" will be used to connect to other services through its name (http://nginx)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec: #default service type will be ClusterIP
+  selector:
+    app: nginx
+  ports:
+  - port: 80 #default for NGINX --> no targetPort implies that external port 80 will be mapped to internal port 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx #to pull default NGINX image from Dockerhub
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 80

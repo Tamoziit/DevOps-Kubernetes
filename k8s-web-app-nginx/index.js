@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/nginx", async (req, res) => {
-    const url = 'http://nginx'; //connecting to nginx deployment endpoint by its static name, rather than its dynamic IP address
+    const url = 'http://nginx'; //connecting/proxying to nginx deployment endpoint by its static name, rather than its dynamic ClusterIP address
     const response = await fetch(url);
     const body = await response.text();
     res.send(body);

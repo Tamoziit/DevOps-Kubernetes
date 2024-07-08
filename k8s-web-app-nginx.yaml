@@ -1,0 +1,36 @@
+#Clubbing both Service & Deployment configs together
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-web-app-nginx
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s-web-app-nginx
+  ports:
+  - port: 3333
+    targetPort: 3000
+--- #Delimiter to differentiate service & deployment configs
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-app-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8s-web-app-nginx
+  template:
+    metadata:
+      labels:
+        app: k8s-web-app-nginx
+    spec:
+      containers:
+      - name: k8s-web-app-nginx
+        image: insanelytamojit/k8s-web-app-nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
