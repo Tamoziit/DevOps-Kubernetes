@@ -1,0 +1,11 @@
+apiVersion: v1 #different from deployment.yaml
+kind: Service #equivalent to creating a service using kubectl
+metadata:
+  name: k8s-web-app #Service name
+spec:
+  type: LoadBalancer #LoadBalancer type service
+  selector:
+    app: k8s-web-app
+  ports:
+  - port: 3030 #external port
+    targetPort: 3000 #target port

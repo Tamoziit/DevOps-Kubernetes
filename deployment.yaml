@@ -1,0 +1,23 @@
+apiVersion: apps/v1 #Deployment version
+kind: Deployment #equivalent to creating a deployment using kubectl
+metadata:
+  name: k8s-web-app #name of the deployment
+spec:
+  replicas: 5 #No. of replica pods required
+  selector:
+    matchLabels:
+      app: k8s-web-app
+  template: #template kind by default is "Pod"
+    metadata:
+      labels:
+        app: k8s-web-app #matchLabels & labels should be same
+    spec:
+      containers:
+      - name: k8s-web-app #name of the container inside a pod
+        image: insanelytamojit/k8s-web-app #image to be pulled from dockerhub
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m" #1/4th of the total CPU core/compute
+        ports:
+        - containerPort: 3000 #port to be exposed

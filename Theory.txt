@@ -205,4 +205,9 @@ The server will be made available on : http://172.27.189.212:32080
 --> k set image deployment k8s-web-app k8s-web-app=insanelytamojit/k8s-web-app:2.0.0 --> replacing old images with the newly pushed 2.0.0 image
 k rollout status deploy k8s-web-app --> rolling out the updates to the deployments.
 
-NB: Since we have specified a fixed no. of replicas for deployment (here = 4), K8S maintains this ReplicaSet throughout the compute. That means, even if one pod is deleted by us manually, a new pod will be immediately created by K8S, to maintain the ReplicaSet automatically.
+NB: > Since we have specified a fixed no. of replicas for deployment (here = 4), K8S maintains this ReplicaSet throughout the compute. That means, even if one pod is deleted by us manually, a new pod will be immediately created by K8S, to maintain the ReplicaSet automatically.
+    > k delete all --all --> deleting all resources (deployments, pods, services) present in "default" namespace.
+
+
+**Specification/Config yaml/yml files to deploy clusters.
+--> kubectl apply -f deployment.yaml --> creating/applying a deployment in accordance to the specifications we have specified in deployment.yaml file.
